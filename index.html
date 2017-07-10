@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>APIs Web insoupçonnées</title>
+        <meta name="description" content="Petit tour d'horizon de quelques capacités de vos navigateurs dont vous ignoriez peut-être l'existence !" >
+
+        <link rel="stylesheet" href="./node_modules/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="./node_modules/reveal.js/css/theme/beige.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="./node_modules/reveal.js/lib/css/zenburn.css">
+
+        <style type="text/css">
+            .reveal section code.multiligne {
+                word-wrap: break-word;
+            }
+
+            .reveal section .blocks {
+                display: block;
+                font-size: 0.7em;
+                letter-spacing: -2px;
+                font-family: monospace;
+            }
+
+            .reveal section .blocks .block {
+                display: inline-block;
+                margin: 0 5px;
+            }
+
+            .reveal section .emoji {
+                font-size: 2em;
+            }
+
+            .reveal section .mutted {
+                color: #888888;
+            }
+
+            .reveal section .center {
+                text-align: center;
+            }
+
+            .reveal section .row {
+                display: flex;
+            }
+
+            .reveal section .row .column {
+                flex: 1;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>APIs Web insoupçonnées</h1>
+                </section>
+                <section>
+                    <h2>Thomas, Web Developer.</h2>
+                </section>
+                <section>
+                    <section>
+                        <h2>Sous-titres</h2>
+                    </section>
+                    <section data-background-iframe="https://codepen.io/Tom32i/full/LZEEEy"></section>
+                    <section>
+                        <pre><code class="hjs javascript">const track = video.addTextTrack('captions', 'English', 'en');
+const line = new VTTCue(0, 10000, 'Tu connais pas Sheraf ?');
+
+track.addCue(line);</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Game Pad</h2>
+                    </section>
+                    <section data-background-iframe="http://tom32i.github.io/gamepad.js/"></section>
+                    <section>
+                        <pre><code class="hjs javascript">window.addEventListener('gamepadconnected', event => {
+    const { buttons, axes } = event.gamepad;
+    const a = buttons[0].pressed; // true
+    const vertical = axes[1]; // 0.657
+});</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <h1>Merci !</h1>
+                    <div class="row">
+                        <div class="column">
+                            <h4>Sources</h4>
+                            <p><a href="https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields">Specfication nitfi-1</a></p>
+                            <p><a href="https://github.com/Tom32i/binary-brain">Tom32i/binary-brain</a></p>
+                        </div>
+                        <div class="column">
+                            <h4>Questions ?</h4>
+                            <p><a href="https://twitter.com/SPINEscience">@Spine</a></p>
+                            <p><a href="https://twitter.com/Tom32i">@Tom32i</a></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <script src="./node_modules/reveal.js/lib/js/head.min.js"></script>
+        <script src="./node_modules/reveal.js/js/reveal.js"></script>
+
+        <script>
+            Reveal.initialize({
+                history: true,
+                overview: false,
+                help: false,
+
+                dependencies: [
+                    { src: './node_modules/reveal.js/plugin/markdown/marked.js' },
+                    { src: './node_modules/reveal.js/plugin/markdown/markdown.js' },
+                    { src: './node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+        </script>
+    </body>
+</html>

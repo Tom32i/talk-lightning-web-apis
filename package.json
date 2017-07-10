@@ -1,0 +1,14 @@
+{
+  "name": "unappreciated-web-apis",
+  "version": "1.0.0",
+  "description": "Petit tour d'horizon de quelques capacités de vos navigateurs dont vous ignoriez peut-être l'existence !",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Jarrand <thomas.jarrand@gmail.com> (http://thomas.jarrand.fr)",
+  "license": "MIT",
+  "dependencies": {
+    "reveal.js": "^3.5.0"
+  }
+}
