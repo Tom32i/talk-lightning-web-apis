@@ -62,11 +62,13 @@
                     <h2>Thomas, Web Developer.</h2>
                 </section>
                 <section>
-                    <section>
+                    <section data-state="subtitles-stop">
                         <h2>Sous-titres</h2>
                     </section>
-                    <section data-background-iframe="https://codepen.io/Tom32i/full/LZEEEy"></section>
-                    <section>
+                    <section data-state="subtitles-start" data-background-iframe="./subtitles/">
+                        <span class="fragment"></span>
+                    </section>
+                    <section data-state="subtitles-stop">
                         <pre><code class="hjs javascript">const track = video.addTextTrack('captions', 'English', 'en');
 const line = new VTTCue(0, 10000, 'Tu connais pas Sheraf ?');
 
@@ -119,6 +121,20 @@ track.addCue(line);</code></pre>
                     { src: './node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
                 ]
             });
+
+            function setSubtitles(demo) {
+                const next = () => demo.next() ? Reveal.prevFragment() : Reveal.nextFragment();
+
+                Reveal.addEventListener('subtitles-start', e => {
+                    demo.stop();
+                    Reveal.addEventListener('fragmentshown', next);
+                });
+
+                Reveal.addEventListener('subtitles-end', e => {
+                    Reveal.removeEventListener('fragmentshown', next);
+                    demo.stop();
+                });
+            }
         </script>
     </body>
 </html>

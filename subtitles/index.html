@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <script src="./subtitles.js"></script>
+    <link rel="stylesheet" href="./subtitles.css">
+</head>
+<body>
+    <video controls autoplay preload="auto" width="640" height="360" src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4">
+    </video>
+
+    <script>
+        const subtitles = new SubtitlesDemo(document.getElementsByTagName('video')[0]);
+
+        if (typeof(parent.setSubtitles) === 'function') {
+           parent.setSubtitles(subtitles);
+        } else {
+            addEventListener('keypress', subtitles.next);
+        }
+    </script>
+</body>
+</html>
+
