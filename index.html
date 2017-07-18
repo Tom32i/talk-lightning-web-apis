@@ -62,17 +62,15 @@
                     <h2>Thomas, Web Developer.</h2>
                 </section>
                 <section>
-                    <section data-state="subtitles-stop">
+                    <section data-state="subtitles-end">
                         <h2>Sous-titres</h2>
                     </section>
                     <section data-state="subtitles-start" data-background-iframe="./subtitles/">
                         <span class="fragment"></span>
                     </section>
-                    <section data-state="subtitles-stop">
-                        <pre><code class="hjs javascript">const track = video.addTextTrack('captions', 'English', 'en');
-const line = new VTTCue(0, 10000, 'Tu connais pas Sheraf ?');
-
-track.addCue(line);</code></pre>
+                    <section data-state="subtitles-end">
+                        <pre><code class="hjs javascript">const track = video.addTextTrack('captions', 'Français', 'fr');
+track.addCue(new VTTCue(from, to, 'Tu connais pas Sheraf ?'));</code></pre>
                     </section>
                 </section>
                 <section>
@@ -89,16 +87,49 @@ track.addCue(line);</code></pre>
                     </section>
                 </section>
                 <section>
+                    <section>
+                        <h2>Visibilité de l'onglet</h2>
+                    </section>
+                    <section>
+                        <pre><code class="hjs javascript">document.addEventListener('visibilitychange', event => {
+    document.visibilityState;
+    // 'hidden'|'visible'|'prerender'|'unloaded'
+
+    document.hidden;
+    // boolean
+})</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="speech-synthesis-end">
+                        <h2>Speech Synthesis</h2>
+                    </section>
+                    <section data-state="speech-synthesis-start" data-background-iframe="./speech-synthesis">
+                        <span class="fragment"></span>
+                    </section>
+                    <section data-state="speech-synthesis-end">
+                        <pre><code class="hjs javascript"></code></pre>
+                    </section>
+                </section>
+                <!--section>
+                    <section>
+                        <h2>API</h2>
+                    </section>
+                    <section data-background-iframe="/"></section>
+                    <section>
+                        <pre><code class="hjs javascript"></code></pre>
+                    </section>
+                </section-->
+                <section>
                     <h1>Merci !</h1>
                     <div class="row">
                         <div class="column">
                             <h4>Sources</h4>
-                            <p><a href="https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields">Specfication nitfi-1</a></p>
-                            <p><a href="https://github.com/Tom32i/binary-brain">Tom32i/binary-brain</a></p>
+                            <p><a href="https://developer.mozilla.org/en/docs/Web/API">MDN - Web APIs</a></p>
+                            <p><a href="https://github.com/Tom32i/talk-lightning-web-apis">Tom32i/talk-lightning-web-apis</a></p>
                         </div>
                         <div class="column">
                             <h4>Questions ?</h4>
-                            <p><a href="https://twitter.com/SPINEscience">@Spine</a></p>
                             <p><a href="https://twitter.com/Tom32i">@Tom32i</a></p>
                         </div>
                     </div>
@@ -122,15 +153,24 @@ track.addCue(line);</code></pre>
                 ]
             });
 
-            function setSubtitles(demo) {
-                const next = () => demo.next() ? Reveal.prevFragment() : Reveal.nextFragment();
+            function setDemo(name, demo) {
+                console.log('setDemo', name, demo);
+                const next = () => {
+                    const hasNext = demo.next();
+                    console.log('next', name, hasNext);
+                    hasNext ? Reveal.prevFragment() : Reveal.nextFragment();
+                };
 
-                Reveal.addEventListener('subtitles-start', e => {
-                    demo.stop();
+                console.log(`${name}-start`, `${name}-start` === 'subtitles-start');
+                Reveal.addEventListener(`${name}-start`, e => {
+                    console.log(`Start ${name}`);
+                    demo.start();
                     Reveal.addEventListener('fragmentshown', next);
                 });
 
-                Reveal.addEventListener('subtitles-end', e => {
+                console.log(`${name}-end`);
+                Reveal.addEventListener(`${name}-end`, e => {
+                    console.log(`End ${name}`);
                     Reveal.removeEventListener('fragmentshown', next);
                     demo.stop();
                 });

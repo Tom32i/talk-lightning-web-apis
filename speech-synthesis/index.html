@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <script src="../Demo.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        p {
+            flex: 1;
+            text-align: center;
+            margin: 1em;
+            font-size: 5em;
+            line-height: 1em;
+        }
+    </style>
+</head>
+<body>
+    <p id="content">Mais c'est pas une raison pour plus vous laver les joues.</p>
+    <script>
+        class SpeechDemo extends Demo {
+            constructor(content, synth = window.speechSynthesis, locales = ['fr-FR', 'fr-CA']) {
+                super([
+                    () => {
+                        this.setVoice(1);
+                        this.play();
+                    },
+                    () => {
+                        this.setVoice(2);
+                        this.play();
+                    },
+                    () => {
+                        this.setVoice();
+                        this.setPitch(0.3);
+                        this.play();
+                    },
+                    () => {
+                        this.setPitch();
+                        this.setRate(2);
+                        this.play();
+                    },
+                    () => {
+                        this.setPitch(4);
+                        this.setRate(0.5);
+                        this.play();
+                    }
+                ]);
+
+                this.synth = synth;
+                this.locales = locales;
+                this.sentence = new SpeechSynthesisUtterance(content.innerText);
+            }
+
+            play() {
+                this.synth.speak(this.sentence);
+            }
+
+            setVoice(index = 0) {
+                const voices = this.synth.getVoices().filter(voice => this.locales.includes(voice.lang));
+
+                if (typeof voices[index] === 'undefined') {
+                    return;
+                }
+
+                this.sentence.voice = voices[index];
+            }
+
+            setPitch(pitch = 1) {
+                this.sentence.pitch = pitch;
+            }
+
+            setRate(rate = 1) {
+                this.sentence.rate = rate;
+            }
+        }
+
+        const demo = new SpeechDemo(document.getElementById('content'));
+
+        if (typeof(parent.setDemo) === 'function') {
+           parent.setDemo('speech-synthesis', demo);
+        } else {
+            addEventListener('keypress', demo.next);
+        }
+
+        function resize() {
+            document.body.style.width = `${window.innerWidth}px`;
+            document.body.style.height = `${window.innerHeight}px`;
+        }
+
+        addEventListener('load', resize);
+        addEventListener('resize', resize);
+    </script>
+</body>
+</html>
+
