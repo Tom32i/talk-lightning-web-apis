@@ -26,8 +26,8 @@
     <p id="content">Mais c'est pas une raison pour plus vous laver les joues.</p>
     <script>
         class SpeechDemo extends Demo {
-            constructor(content, synth = window.speechSynthesis, locales = ['fr-FR', 'fr-CA']) {
-                super([
+            constructor(name, content, synth = window.speechSynthesis, locales = ['fr-FR', 'fr-CA']) {
+                super(name, [
                     () => {
                         this.setVoice(1);
                         this.play();
@@ -81,21 +81,7 @@
             }
         }
 
-        const demo = new SpeechDemo(document.getElementById('content'));
-
-        if (typeof(parent.setDemo) === 'function') {
-           parent.setDemo('speech-synthesis', demo);
-        } else {
-            addEventListener('keypress', demo.next);
-        }
-
-        function resize() {
-            document.body.style.width = `${window.innerWidth}px`;
-            document.body.style.height = `${window.innerHeight}px`;
-        }
-
-        addEventListener('load', resize);
-        addEventListener('resize', resize);
+        new SpeechDemo('speech-synthesis', document.getElementById('content'));
     </script>
 </body>
 </html>

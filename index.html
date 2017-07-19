@@ -108,7 +108,22 @@ track.addCue(new VTTCue(from, to, 'Tu connais pas Sheraf ?'));</code></pre>
                         <span class="fragment"></span>
                     </section>
                     <section data-state="speech-synthesis-end">
-                        <pre><code class="hjs javascript"></code></pre>
+                        <pre><code class="hjs javascript">const sentence = new SpeechSynthesisUtterance('Hellow world!');
+sentence.voice = window.speechSynthesis.getVoices()[2];
+window.speechSynthesis.speak(sentence);</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="device-orientation-end">
+                        <h2>Device orientation</h2>
+                    </section>
+                    <section data-state="device-orientation-start" data-background-iframe="./device-orientation">
+                        <span class="fragment"></span>
+                    </section>
+                    <section data-state="device-orientation-end">
+                        <pre><code class="hjs javascript">addEventListener('deviceorientation', event => {
+    const { alpha, beta, gamma } = event;
+});</code></pre>
                     </section>
                 </section>
                 <!--section>
@@ -154,23 +169,14 @@ track.addCue(new VTTCue(from, to, 'Tu connais pas Sheraf ?'));</code></pre>
             });
 
             function setDemo(name, demo) {
-                console.log('setDemo', name, demo);
-                const next = () => {
-                    const hasNext = demo.next();
-                    console.log('next', name, hasNext);
-                    hasNext ? Reveal.prevFragment() : Reveal.nextFragment();
-                };
+                const next = () => demo.next() ? Reveal.prevFragment() : Reveal.nextFragment();
 
-                console.log(`${name}-start`, `${name}-start` === 'subtitles-start');
                 Reveal.addEventListener(`${name}-start`, e => {
-                    console.log(`Start ${name}`);
                     demo.start();
                     Reveal.addEventListener('fragmentshown', next);
                 });
 
-                console.log(`${name}-end`);
                 Reveal.addEventListener(`${name}-end`, e => {
-                    console.log(`End ${name}`);
                     Reveal.removeEventListener('fragmentshown', next);
                     demo.stop();
                 });

@@ -3,15 +3,33 @@
  */
 class Demo {
     /**
+     * @param {String} name
      * @param {Array} steps
      */
-    constructor(steps = []) {
-        this.step = 0;
+    constructor(name, steps = []) {
+        this.name = name;
         this.steps = steps;
+        this.step = 0;
 
+        this.load = this.load.bind(this);
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         this.next = this.next.bind(this);
+        this.resize = this.resize.bind(this);
+
+        addEventListener('load', this.resize);
+        addEventListener('resize', this.resize);
+
+        setTimeout(this.load, 0);
+    }
+
+    load() {
+        if (typeof(parent.setDemo) === 'function') {
+           parent.setDemo(this.name, this);
+        } else {
+            this.start();
+            addEventListener('keypress', this.next);
+        }
     }
 
     /**
@@ -38,8 +56,6 @@ class Demo {
 
         this.execute();
 
-        console.log('next', this.hasNextStep());
-
         return this.hasNextStep();
     }
 
@@ -57,5 +73,13 @@ class Demo {
      */
     hasNextStep() {
         return this.step < this.steps.length;
+    }
+
+    /**
+     * Resize body
+     */
+    resize() {
+        document.body.style.width = `${window.innerWidth}px`;
+        document.body.style.height = `${window.innerHeight}px`;
     }
 }

@@ -25,14 +25,12 @@
 </head>
 <body>
     <!-- http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4 -->
-    <video preload="auto" width="640" height="360" src="./le-grand-détournement.mp4"></video>
+    <video preload="auto" width="640" height="360" src="./le-grand-detournement-sheraf.mp4"></video>
 
     <script>
         class SubtitlesDemo extends Demo {
-            constructor(video) {
-                super([
-                    () => this.setContent('Tu connais pas sheraf ?'),
-                    () => this.setContent('C\'est un groupe, ils étaient number one.'),
+            constructor(name, video) {
+                super(name, [
                     () => this.setAlign('right'),
                     () => this.setAlign('left'),
                     () => this.setAlign(),
@@ -65,7 +63,6 @@
                 this.video = video;
                 this.content = '';
                 this.track = null;
-                this.cue = null;
 
                 this.onLoad = this.onLoad.bind(this);
                 this.show = this.show.bind(this);
@@ -80,18 +77,25 @@
             onLoad() {
                 this.track = this.video.addTextTrack('captions', 'Français', 'fr-FR');
                 this.track.mode = 'showing';
-                this.cue = new VTTCue(0, 60 * 10, this.content);
-                this.track.addCue(this.cue);
+
+                this.track.addCue(new VTTCue(0.550, 2.550, 'Sheraf.'));
+                this.track.addCue(new VTTCue(2.550, 5.550, 'Tu connais pas Sheraf ?'));
+                this.track.addCue(new VTTCue(6.000, 8.100, 'C’est un groupe, ils étaient number one.'));
+                this.track.addCue(new VTTCue(8.650, 12.150, 'C’est pas une raison pour vous laisser aller et ressembler à une larve.'));
+                this.track.addCue(new VTTCue(12.400, 19.100, 'Regarde ! Je me suis niqué les mains avec cette saloperie de collec de pin’s à la con !'));
+                this.track.addCue(new VTTCue(19.350, 23.150, 'Bon moi j’y vais, merci pour les pin’s ! Vous inquiétez pas, tout va s’arranger.'));
+                this.track.addCue(new VTTCue(23.400, 25.900, 'Et comme on dit chez nous, Lehaïm !'));
+                this.track.addCue(new VTTCue(25.900, 26.900, 'Lehaïm.'));
+                this.cues = Array.from(this.track.cues);
             }
 
             start() {
                 super.start();
+                this.video.play();
                 this.setLine();
                 this.setPosition();
                 this.setAlign();
                 this.setSize();
-                this.setContent();
-                this.video.play();
             }
 
             stop() {
@@ -114,47 +118,33 @@
             }
 
             setContent(content = '') {
-                this.cue.text = content;
+                this.cues.forEach(cue => cue.text = content);
             }
 
             setAlign(align = 'center') {
-                this.cue.align = align;
+                this.cues.forEach(cue => cue.align = align);
             }
 
             setSize(size = 100) {
                 this.hide();
-                this.cue.size = size;
+                this.cues.forEach(cue => cue.size = size);
                 this.show();
             }
 
             setVertical(vertical = '') {
-                this.cue.vertical = vertical;
+                this.cues.forEach(cue => cue.vertical = vertical);
             }
 
             setLine(line = 'auto') {
-                this.cue.line = line;
+                this.cues.forEach(cue => cue.line = line);
             }
 
             setPosition(position = 'auto') {
-                this.cue.position = position;
+                this.cues.forEach(cue => cue.position = position);
             }
         }
 
-        const demo = new SubtitlesDemo(document.getElementsByTagName('video')[0]);
-
-        if (typeof(parent.setDemo) === 'function') {
-           parent.setDemo('subtitles', demo);
-        } else {
-            addEventListener('keypress', demo.next);
-        }
-
-        function resize() {
-            document.body.style.width = `${window.innerWidth}px`;
-            document.body.style.height = `${window.innerHeight}px`;
-        }
-
-        addEventListener('load', resize);
-        addEventListener('resize', resize);
+        new SubtitlesDemo('subtitles', document.getElementsByTagName('video')[0]);
     </script>
 </body>
 </html>
