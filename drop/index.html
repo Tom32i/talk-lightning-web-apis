@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <script src="../Demo.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            font-family: "Lato", sans-serif;
+        }
+
+        #zone {
+            flex: 1;
+            max-width: 66%;
+            max-height: 66%;
+            text-align: justify;
+            font-size: 2em;
+            margin: 0;
+            padding: 0;
+        }
+
+        #zone:empty {
+            border: 0.1em dashed gray;
+            height: 100%;
+        }
+
+        #zone > * {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="zone"></div>
+    <script>
+        class DropDemo extends Demo {
+            constructor(name, zone) {
+                super(name);
+
+                this.zone = zone;
+
+                this.onDrop = this.onDrop.bind(this);
+                this.prevent = this.prevent.bind(this);
+                this.dropFile = this.dropFile.bind(this);
+            }
+
+            start() {
+                super.start();
+                document.body.addEventListener('dragenter', this.prevent);
+                document.body.addEventListener('dragover', this.prevent);
+                document.body.addEventListener('drop', this.onDrop);
+            }
+
+            stop() {
+                super.stop();
+                document.body.removeEventListener('dragenter', this.prevent);
+                document.body.removeEventListener('dragover', this.prevent);
+                document.body.removeEventListener('drop', this.onDrop);
+                this.zone.innerText = null;
+            }
+
+            prevent(event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+                return false;
+            }
+
+            onDrop(event) {
+                this.prevent(event);
+
+                const { dataTransfer } = event;
+                const { types, files } = dataTransfer;
+
+                if (types.includes('Files')) {
+                    this.zone.innerText = null;
+                    Array.from(dataTransfer.files).forEach(this.dropFile);
+                } else if (types.includes('text/x-spotify-data-app-uri')) {
+                    types.forEach(type => console.log(type, dataTransfer.getData(type)));
+                    this.dropSong(dataTransfer.getData('text/plain'));
+                } else {
+                    this.dropText(dataTransfer.getData('text/plain'));
+                }
+            }
+
+            dropFile(file) {
+                if (new RegExp('^image\/', 'ig').test(file.type)) {
+                    const reader = new FileReader();
+                    const image = document.createElement('img');
+                    image.file = file;
+                    this.zone.appendChild(image);
+                    reader.addEventListener('load', e => image.src = e.target.result);
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            dropText(text) {
+                this.zone.innerText = text;
+            }
+
+            dropSong(uri) {
+                this.zone.innerHTML = `<iframe src="https://open.spotify.com/embed?uri=${uri}" frameborder="0" allowtransparency="true"></iframe>`;
+            }
+        }
+
+        new DropDemo('drop', document.getElementById('zone'));
+    </script>
+</body>
+</html>
+

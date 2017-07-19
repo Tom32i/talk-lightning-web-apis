@@ -50,6 +50,10 @@
                 flex: 1;
                 text-align: center;
             }
+
+            .reveal section img {
+                border: none;
+            }
         </style>
     </head>
     <body>
@@ -70,7 +74,9 @@
                     </section>
                     <section data-state="subtitles-end">
                         <pre><code class="hjs javascript">const track = video.addTextTrack('captions', 'Français', 'fr');
-track.addCue(new VTTCue(from, to, 'Tu connais pas Sheraf ?'));</code></pre>
+cosnt cue = new VTTCue(1.224, 3.740, 'Tu connais pas Sheraf ?');
+cue.align = right;
+track.addCue(cue);</code></pre>
                     </section>
                 </section>
                 <section>
@@ -87,18 +93,22 @@ track.addCue(new VTTCue(from, to, 'Tu connais pas Sheraf ?'));</code></pre>
                     </section>
                 </section>
                 <section>
-                    <section>
-                        <h2>Visibilité de l'onglet</h2>
-                    </section>
-                    <section>
-                        <pre><code class="hjs javascript">document.addEventListener('visibilitychange', event => {
+                    <h2>Visibilité de l'onglet</h2>
+                    <pre><code class="hjs javascript">document.addEventListener('visibilitychange', event => {
     document.visibilityState;
     // 'hidden'|'visible'|'prerender'|'unloaded'
 
     document.hidden;
     // boolean
 })</code></pre>
-                    </section>
+                </section>
+                <section data-state="notify">
+                    <h2>Notifications</h2>
+                    <pre><code class="hjs javascript">Notification.requestPermission().then(result => {
+    if (result === 'granted') {
+        new Notification('Mulder, it\'s me.');
+    }
+});</code></pre>
                 </section>
                 <section>
                     <section data-state="speech-synthesis-end">
@@ -108,8 +118,11 @@ track.addCue(new VTTCue(from, to, 'Tu connais pas Sheraf ?'));</code></pre>
                         <span class="fragment"></span>
                     </section>
                     <section data-state="speech-synthesis-end">
-                        <pre><code class="hjs javascript">const sentence = new SpeechSynthesisUtterance('Hellow world!');
+                        <pre><code class="hjs javascript">// Create a sentence
+const sentence = new SpeechSynthesisUtterance('Hellow world!');
+// Choose a voice
 sentence.voice = window.speechSynthesis.getVoices()[2];
+// Read the sentence
 window.speechSynthesis.speak(sentence);</code></pre>
                     </section>
                 </section>
@@ -126,6 +139,76 @@ window.speechSynthesis.speak(sentence);</code></pre>
 });</code></pre>
                     </section>
                 </section>
+                <section>
+                    <section>
+                        <h2>Battery manager</h2>
+                        <div id="battery"></div>
+                    </section>
+                    <section>
+                        <!-- https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager -->
+                        <pre><code class="hjs javascript">navigator.getBattery().then(batteryManager => {
+    const { charging, chargingTime, dischargingTime, level } = batteryManager;
+});</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Number of processor core</h2>
+                        <script>document.write(`You hace ${navigator.hardwareConcurrency} core(s).`);</script>
+                        <!-- https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager -->
+                        <pre><code class="hjs javascript center">const { hardwareConcurrency } = navigator;</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="drop-end">
+                        <h2>Drop</h2>
+                    </section>
+                    <section data-state="drop-start" data-background-iframe="./drop">
+                        <span class="fragment"></span>
+                    </section>
+                    <section data-state="drop-end">
+                        <pre><code class="hjs javascript">addEventListener('drop', event => {
+    const value = event.dataTransfer.getData('text/plain');
+    // or
+    const { files } = event.dataTransfer; // Get droped files
+});</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="geolocation-end">
+                        <h2>Geolocation</h2>
+                    </section>
+                    <section data-state="geolocation-start" data-background-iframe="./geolocation">
+                        <span class="fragment"></span>
+                    </section>
+                    <section data-state="geolocation-end">
+                        <pre><code class="hjs javascript">navigator.geolocation(position => {
+    const { longitude, latitude } = position.coords;
+});</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="user-media-end">
+                        <h2>User media</h2>
+                    </section>
+                    <section data-state="user-media-start" data-background-iframe="./user-media"></section>
+                    <section data-state="user-media-end">
+                        <pre><code class="hjs javascript">const video = document.createElement('video');
+// Play video once ready
+this.video.addEventListener('loadedmetadata', () => video.play());
+// Get the stream...
+navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    // ...and set it as the video source
+    .then(stream => video.srcObject = stream);</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <h2>Touch</h2>
+                </section>
+                <section>
+                    <h2>Canvas</h2>
+                </section>
                 <!--section>
                     <section>
                         <h2>API</h2>
@@ -138,12 +221,12 @@ window.speechSynthesis.speak(sentence);</code></pre>
                 <section>
                     <h1>Merci !</h1>
                     <div class="row">
-                        <div class="column">
+                        <div class="column" style="flex: 3;">
                             <h4>Sources</h4>
                             <p><a href="https://developer.mozilla.org/en/docs/Web/API">MDN - Web APIs</a></p>
                             <p><a href="https://github.com/Tom32i/talk-lightning-web-apis">Tom32i/talk-lightning-web-apis</a></p>
                         </div>
-                        <div class="column">
+                        <div class="column" style="flex: 2;">
                             <h4>Questions ?</h4>
                             <p><a href="https://twitter.com/Tom32i">@Tom32i</a></p>
                         </div>
@@ -154,6 +237,8 @@ window.speechSynthesis.speak(sentence);</code></pre>
 
         <script src="./node_modules/reveal.js/lib/js/head.min.js"></script>
         <script src="./node_modules/reveal.js/js/reveal.js"></script>
+        <script src="./notification/Notifier.js"></script>
+        <script src="./battery/BatteryMonitor.js"></script>
 
         <script>
             Reveal.initialize({
@@ -164,23 +249,35 @@ window.speechSynthesis.speak(sentence);</code></pre>
                 dependencies: [
                     { src: './node_modules/reveal.js/plugin/markdown/marked.js' },
                     { src: './node_modules/reveal.js/plugin/markdown/markdown.js' },
-                    { src: './node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                    { src: './node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: () => { hljs.initHighlightingOnLoad(); } }
                 ]
             });
 
             function setDemo(name, demo) {
-                const next = () => demo.next() ? Reveal.prevFragment() : Reveal.nextFragment();
+                console.log('setDemo', name, demo);
+                const next = () => {
+                    let hasNext = demo.next();
+                    console.log(name, hasNext);
+                    return hasNext ? Reveal.prevFragment() : Reveal.nextFragment();
+                };
 
                 Reveal.addEventListener(`${name}-start`, e => {
+                    console.log(`Start ${name}`);
                     demo.start();
                     Reveal.addEventListener('fragmentshown', next);
                 });
 
                 Reveal.addEventListener(`${name}-end`, e => {
+                    console.log(`Stop ${name}`);
                     Reveal.removeEventListener('fragmentshown', next);
                     demo.stop();
                 });
             }
+
+            const notifier = new Notifier();
+            const batteryMonitor = new BatteryMonitor(document.getElementById('battery'));
+
+            Reveal.addEventListener('notify', notifier.notify);
         </script>
     </body>
 </html>

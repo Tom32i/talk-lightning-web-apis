@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Géolocation</title>
+
+    <script src="../Demo.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            font-family: "Lato", sans-serif;
+        }
+
+        #zone {
+            flex: 1;
+            max-width: 66%;
+            max-height: 66%;
+            text-align: center;
+            font-size: 2em;
+            margin: 0;
+            padding: 0;
+        }
+
+        #zone > * {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        p {
+            text-align: center;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+    <div id="zone">
+        <img id="map">
+        <p>📍 <span id="position"></span></p>
+    </div>
+    <script>
+        class PositionWatcher extends Demo {
+            constructor(map, position, apiKey, zoom = 16, width = 480, height = 300, geolocation = navigator.geolocation) {
+                super('geolocation');
+
+                this.map = map;
+                this.position = position;
+                this.apiKey = apiKey;
+                this.zoom = zoom;
+                this.width = width;
+                this.height = height;
+                this.geolocation = geolocation;
+                this.options = { enableHighAccuracy: true };
+                this.watcher = null;
+
+                this.display = this.display.bind(this);
+                this.onError = this.onError.bind(this);
+            }
+
+            start() {
+                super.start();
+                this.watcher = this.geolocation.watchPosition(this.display, this.onError, this.options);
+            }
+
+            stop() {
+                super.stop();
+                this.geolocation.clearWatch(this.watcher);
+                this.watcher = null;
+            }
+
+            getPosition() {
+                this.geolocation.getCurrentPosition(this.display, this.onError, this.options);
+            }
+
+            display(position) {
+                const { longitude, latitude } = position.coords;
+
+                this.map.src = this.getMapUrl(longitude, latitude);
+                this.position.innerText = `${latitude}, ${longitude}`;
+            }
+
+            getMapUrl(longitude, latitude) {
+                const { apiKey, zoom, width, height } = this;
+
+                return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${zoom}&size=${width}x${height}&key=${apiKey}`;
+            }
+
+            onError(error) {
+                console.error(error);
+            }
+        }
+
+        new PositionWatcher(
+            document.getElementById('map'),
+            document.getElementById('position'),
+            'AIzaSyCTbuU-RGQZfm8Zg1jl-O9HvntKnrgR2To'
+        );
+    </script>
+</body>
+</html>
+

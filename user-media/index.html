@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Géolocation</title>
+
+    <script src="../Demo.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            font-family: "Lato", sans-serif;
+        }
+
+        video {
+            flex: 1;
+            background: transparent;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <video width="640" height="360"></video>
+    <script>
+        class WebCam extends Demo {
+            constructor(video, devices = navigator.mediaDevices) {
+                super('user-media');
+
+                this.video = video;
+                this.devices = devices;
+                this.constraints = {
+                    video: true,
+                    audio: true,
+                };
+
+                this.onStream = this.onStream.bind(this);
+                this.onLoad = this.onLoad.bind(this);
+                this.onError = this.onError.bind(this);
+
+                this.video.addEventListener('loadedmetadata', this.onLoad);
+            }
+
+            start() {
+                super.start();
+
+                this.devices.getUserMedia(this.constraints)
+                    .then(this.onStream)
+                    .catch(this.onError);
+            }
+
+            stop() {
+                super.stop();
+                this.video.pause();
+            }
+
+            onStream(stream) {
+                this.video.srcObject = stream;
+            }
+
+            onLoad() {
+                this.video.play();
+            }
+
+            onError(error) {
+                console.error(error);
+            }
+        }
+
+        new WebCam(document.getElementsByTagName('video')[0]);
+    </script>
+</body>
+</html>
+

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-
+    <title>Device Orientation</title>
     <script src="../Demo.js"></script>
     <style type="text/css">
         body {
@@ -11,6 +10,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: "Lato", sans-serif;
         }
 
         .scene {
@@ -79,10 +79,6 @@
 
                 this.onOrientation = this.onOrientation.bind(this);
 
-                console.log(Object.keys(this.cube), this.cube.style);
-
-                addEventListener('deviceorientation', this.onOrientation);
-
                 console.log(-30, this.parse(-30));
                 console.log(-10, this.parse(-10));
                 console.log(-2, this.parse(-2));
@@ -94,14 +90,20 @@
                 console.log(30, this.parse(30));
             }
 
+            start() {
+                super.start();
+                addEventListener('deviceorientation', this.onOrientation);
+            }
+
+            stop() {
+                super.stop();
+                removeEventListener('deviceorientation', this.onOrientation);
+                this.cube.style.transform = '';
+            }
+
             onOrientation(event) {
                 const { alpha, beta, gamma } = event;
-
-                //console.log(beta, this.parse(beta));
-                //console.log(gamma, this.parse(gamma));
-                //this.cube.style.transform = `rotate3d(${this.parse(1)}, ${this.parse(0)}, ${this.parse(0)}, 1deg)`;
                 this.cube.style.transform = `rotate3d(${this.parse(beta)}, ${this.parse(alpha)}, ${this.parse(gamma)}, 10deg)`;
-                console.log(this.cube.style.transform);
             }
 
             parse(value) {
