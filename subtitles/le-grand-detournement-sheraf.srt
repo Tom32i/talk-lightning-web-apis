@@ -1,32 +1,40 @@
 ﻿1
-00:00:00,550 --> 00:00:02,550
+00:00:00,340 --> 00:00:02,000
 Sheraf.
 
 2
-00:00:02,550 --> 00:00:05,550
+00:00:02,220 --> 00:00:03,720
 Tu connais pas Sheraf ?
 
 3
-00:00:06,000 --> 00:00:08,100
+00:00:04,820 --> 00:00:06,580
 C’est un groupe, ils étaient number one.
 
 4
-00:00:08,650 --> 00:00:12,150
-C’est pas une raison pour vous
-laisser aller et ressembler à une larve.
+00:00:06,620 --> 00:00:10,700
+C’est pas une raison pour vous laisser aller et ressembler à une larve.
 
 5
-00:00:12,400 --> 00:00:19,100
-Regarde ! Je me suis niqué les mains avec
-cette saloperie de collec de pin’s à la con !
+00:00:11,200 --> 00:00:13,140
+Regarde mes main, saloperie !
 
 6
-00:00:19,350 --> 00:00:23,150
-Moi j’y vais, merci pour les pin’s !
-Vous inquiétez pas, tout va s’arranger.
+00:00:13,880 --> 00:00:17,060
+Regarde ! Je me suis niqué les mains moi avec cette saloperie de collec de pin’s à la con !
 
 7
-00:00:23,400 --> 00:00:26,900
-— Comme on dit chez nous, Lehaïm !
-— Lehaïm.
+00:00:17,080 --> 00:00:18,980
+Bon, moi j’y vais, merci pour les pin’s !
+
+8
+00:00:19,000 --> 00:00:20,960
+Et vous inquiétez pas, tout va s’arranger.
+
+9
+00:00:21,040 --> 00:00:23,620
+Comme on dit chez nous, Lehaïm !
+
+10
+00:00:24,540 --> 00:00:25,200
+Lehaïm.
 

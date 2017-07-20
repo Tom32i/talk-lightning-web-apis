@@ -55,6 +55,7 @@
 
             stop() {
                 super.stop();
+                this.video.srcObject.stop();
                 this.video.pause();
             }
 
