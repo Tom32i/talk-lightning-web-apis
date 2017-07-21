@@ -85,6 +85,20 @@ track.addCue(cue);</code></pre>
                 </section>
                 <section>
                     <section>
+                        <h2>Battery manager</h2>
+                        <div id="battery"></div>
+                    </section>
+                    <section>
+                        <!-- https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager -->
+                        <pre><code class="hjs javascript">// Getting battery infos is async
+navigator.getBattery().then(batteryManager => {
+    // Extract information from the battery manager
+    const { charging, chargingTime, dischargingTime, level } = batteryManager;
+});</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
                         <h2>Game Pad</h2>
                     </section>
                     <section data-background-iframe="./node_modules/gamepad.js/index.html"></section>
@@ -137,33 +151,21 @@ sentence.voice = window.speechSynthesis.getVoices()[2];
 window.speechSynthesis.speak(sentence);</code></pre>
                     </section>
                 </section>
-                <section>
-                    <section data-state="device-orientation-end">
-                        <h2>Device orientation</h2>
-                    </section>
-                    <section data-state="device-orientation-start" data-background-iframe="./device-orientation">
-                        <span class="fragment"></span>
-                    </section>
-                    <section data-state="device-orientation-end">
-                        <pre><code class="hjs javascript">// Listen for change
-addEventListener('deviceorientation', event => {
-    // Get orientation data
-    const { alpha, beta, gamma } = event;
-});</code></pre>
-                    </section>
+                <section data-background="./retro.jpg">
+                    <h2 style="color: cyan;">JAVA</h2>
+                    <pre style="width: 66%;"><code class="hjs javascript center">window.navigator.javaEnabled(); // boolean</code></pre>
                 </section>
                 <section>
-                    <section>
-                        <h2>Battery manager</h2>
-                        <div id="battery"></div>
+                    <section data-state="user-media-end">
+                        <h2>User media</h2>
                     </section>
-                    <section>
-                        <!-- https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager -->
-                        <pre><code class="hjs javascript">// Getting battery infos is async
-navigator.getBattery().then(batteryManager => {
-    // Extract information from the battery manager
-    const { charging, chargingTime, dischargingTime, level } = batteryManager;
-});</code></pre>
+                    <section data-state="user-media-start" data-background-iframe="./user-media"></section>
+                    <section data-state="user-media-end">
+                        <pre><code class="hjs javascript">// Get the stream...
+navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    // ...and set it as the video source
+    .then(stream => video.srcObject = stream);</code></pre>
                     </section>
                 </section>
                 <section>
@@ -214,16 +216,18 @@ this.geolocation.getCurrentPosition(position => position.coords);
                     </section>
                 </section>
                 <section>
-                    <section data-state="user-media-end">
-                        <h2>User media</h2>
+                    <section data-state="device-orientation-end">
+                        <h2>Device orientation</h2>
                     </section>
-                    <section data-state="user-media-start" data-background-iframe="./user-media"></section>
-                    <section data-state="user-media-end">
-                        <pre><code class="hjs javascript">// Get the stream...
-navigator.mediaDevices
-    .getUserMedia({ video: true, audio: true })
-    // ...and set it as the video source
-    .then(stream => video.srcObject = stream);</code></pre>
+                    <section data-state="device-orientation-start" data-background-iframe="./device-orientation">
+                        <span class="fragment"></span>
+                    </section>
+                    <section data-state="device-orientation-end">
+                        <pre><code class="hjs javascript">// Listen for change
+addEventListener('deviceorientation', event => {
+    // Get orientation data
+    const { alpha, beta, gamma } = event;
+});</code></pre>
                     </section>
                 </section>
                 <!--section>
