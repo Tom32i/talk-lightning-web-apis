@@ -73,9 +73,13 @@
                         <span class="fragment"></span>
                     </section>
                     <section data-state="subtitles-end">
-                        <pre><code class="hjs javascript">const track = video.addTextTrack('captions', 'Français', 'fr');
+                        <pre><code class="hjs javascript">// Create a subtitle track
+const track = video.addTextTrack('captions', 'Français', 'fr');
+// Add a time-coded line (cue)
 cosnt cue = new VTTCue(1.224, 3.740, 'Tu connais pas Sheraf ?');
+// Ajust its properties
 cue.align = right;
+// Add the cue to the track
 track.addCue(cue);</code></pre>
                     </section>
                 </section>
@@ -85,16 +89,21 @@ track.addCue(cue);</code></pre>
                     </section>
                     <section data-background-iframe="http://tom32i.github.io/gamepad.js/"></section>
                     <section>
-                        <pre><code class="hjs javascript">window.addEventListener('gamepadconnected', event => {
+                        <pre><code class="hjs javascript">// Listen for gamepad connection
+window.addEventListener('gamepadconnected', event => {
+    // Get the gamepad object
     const { buttons, axes } = event.gamepad;
+    // Get the value of a button
     const a = buttons[0].pressed; // true
+    // Get the value of a stick
     const vertical = axes[1]; // 0.657
 });</code></pre>
                     </section>
                 </section>
                 <section>
                     <h2>Visibilité de l'onglet</h2>
-                    <pre><code class="hjs javascript">document.addEventListener('visibilitychange', event => {
+                    <pre><code class="hjs javascript">// You can listen for visibility change
+document.addEventListener('visibilitychange', event => {
     document.visibilityState;
     // 'hidden'|'visible'|'prerender'|'unloaded'
 
@@ -104,8 +113,10 @@ track.addCue(cue);</code></pre>
                 </section>
                 <section data-state="notify">
                     <h2>Notifications</h2>
-                    <pre><code class="hjs javascript">Notification.requestPermission().then(result => {
+                    <pre><code class="hjs javascript">// You have to request permission first
+Notification.requestPermission().then(result => {
     if (result === 'granted') {
+        // If acces has been granted, you can notify the user
         new Notification('Mulder, it\'s me.');
     }
 });</code></pre>
@@ -134,7 +145,9 @@ window.speechSynthesis.speak(sentence);</code></pre>
                         <span class="fragment"></span>
                     </section>
                     <section data-state="device-orientation-end">
-                        <pre><code class="hjs javascript">addEventListener('deviceorientation', event => {
+                        <pre><code class="hjs javascript">// Listen for change
+addEventListener('deviceorientation', event => {
+    // Get orientation data
     const { alpha, beta, gamma } = event;
 });</code></pre>
                     </section>
@@ -146,7 +159,9 @@ window.speechSynthesis.speak(sentence);</code></pre>
                     </section>
                     <section>
                         <!-- https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager -->
-                        <pre><code class="hjs javascript">navigator.getBattery().then(batteryManager => {
+                        <pre><code class="hjs javascript">// Getting battery infos is async
+navigator.getBattery().then(batteryManager => {
+    // Extract information from the battery manager
     const { charging, chargingTime, dischargingTime, level } = batteryManager;
 });</code></pre>
                     </section>
@@ -167,10 +182,17 @@ window.speechSynthesis.speak(sentence);</code></pre>
                         <span class="fragment"></span>
                     </section>
                     <section data-state="drop-end">
-                        <pre><code class="hjs javascript">addEventListener('drop', event => {
-    const value = event.dataTransfer.getData('text/plain');
-    // or
-    const { files } = event.dataTransfer; // Get droped files
+                        <pre><code class="hjs javascript">// Listen for drop events
+addEventListener('drop', event => {
+    const { type, files, getData } = event.dataTransfer;
+
+    if (types.includes('Files')) {
+        // Get droped files
+        files.forEach(file => file.type);
+    } else {
+        // Or get content
+        const value = getData('text/plain');
+    }
 });</code></pre>
                     </section>
                 </section>
@@ -182,9 +204,13 @@ window.speechSynthesis.speak(sentence);</code></pre>
                         <span class="fragment"></span>
                     </section>
                     <section data-state="geolocation-end">
-                        <pre><code class="hjs javascript">navigator.geolocation(position => {
+                        <pre><code class="hjs javascript">// Watch for location changes
+navigator.geolocation.watchPosition(position => {
     const { longitude, latitude } = position.coords;
-});</code></pre>
+});
+// You can also get position at time t
+this.geolocation.getCurrentPosition(position => position.coords);
+</code></pre>
                     </section>
                 </section>
                 <section>
@@ -193,10 +219,7 @@ window.speechSynthesis.speak(sentence);</code></pre>
                     </section>
                     <section data-state="user-media-start" data-background-iframe="./user-media"></section>
                     <section data-state="user-media-end">
-                        <pre><code class="hjs javascript">const video = document.createElement('video');
-// Play video once ready
-this.video.addEventListener('loadedmetadata', () => video.play());
-// Get the stream...
+                        <pre><code class="hjs javascript">// Get the stream...
 navigator.mediaDevices
     .getUserMedia({ video: true, audio: true })
     // ...and set it as the video source

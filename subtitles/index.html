@@ -26,7 +26,7 @@
 </head>
 <body>
     <!-- http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4 -->
-    <video preload="auto" width="640" height="360" src="./le-grand-detournement-sheraf-3.mp4"></video>
+    <video preload="auto" width="640" height="360" src="./le-grand-detournement-sheraf.mp4"></video>
 
     <script>
         class SubtitlesDemo extends Demo {
@@ -34,14 +34,18 @@
                 super(name, [
                     () => this.setAlign('right'),
                     () => this.setAlign('left'),
-                    () => this.setAlign(),
-                    () => this.setSize(50),
-                    () => this.setSize(25),
-                    () => this.setSize(),
-                    () => this.setVertical('rl'),
-                    () => this.setVertical('lr'),
-                    () => this.setVertical(),
                     () => {
+                        this.setAlign();
+                        this.setSize(50);
+                    },
+                    () => this.setSize(25),
+                    () => {
+                        this.setSize();
+                        this.setVertical('rl');
+                    },
+                    () => this.setVertical('lr'),
+                    () => {
+                        this.setVertical();
                         this.setLine(10);
                         this.setPosition(25);
                         this.setSize(50);
@@ -72,15 +76,6 @@
             onLoad() {
                 this.track = this.video.addTextTrack('captions', 'Français', 'fr-FR');
                 this.track.mode = 'showing';
-
-                // this.track.addCue(new VTTCue(0.550, 2.550, 'Sheraf.'));
-                // this.track.addCue(new VTTCue(2.550, 5.550, 'Tu connais pas Sheraf ?'));
-                // this.track.addCue(new VTTCue(6.000, 8.100, 'C’est un groupe, ils étaient number one.'));
-                // this.track.addCue(new VTTCue(8.650, 12.150, 'C’est pas une raison pour vous laisser aller et ressembler à une larve.'));
-                // this.track.addCue(new VTTCue(12.400, 19.100, 'Regarde ! Je me suis niqué les mains avec cette saloperie de collec de pin’s à la con !'));
-                // this.track.addCue(new VTTCue(19.350, 23.150, 'Bon moi j’y vais, merci pour les pin’s ! Vous inquiétez pas, tout va s’arranger.'));
-                // this.track.addCue(new VTTCue(23.400, 25.900, 'Et comme on dit chez nous, Lehaïm !'));
-                // this.track.addCue(new VTTCue(25.900, 26.900, 'Lehaïm.'));
 
                 this.track.addCue(new VTTCue(0.340, 2.000, 'Sheraf.'));
                 this.track.addCue(new VTTCue(2.220, 3.720, 'Tu connais pas Sheraf ?'));
