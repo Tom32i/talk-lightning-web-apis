@@ -30,7 +30,7 @@
             height: 100%;
             position: absolute;
             transform-style: preserve-3d;
-            transition: transform 10ms;
+            transition: transform 50ms;
         }
 
         #cube figure {
@@ -40,7 +40,7 @@
             display: block;
             position: absolute;
             border: 2px solid black;
-            background: hsla( 240, 100%, 50%, 0.7 );
+            background: hsla(240, 100%, 50%, 0.7);
             font-size: 120px;
             line-height: 200px;
             font-weight: bold;
@@ -78,16 +78,6 @@
                 this.cube = cube;
 
                 this.onOrientation = this.onOrientation.bind(this);
-
-                console.log(-30, this.parse(-30));
-                console.log(-10, this.parse(-10));
-                console.log(-2, this.parse(-2));
-                console.log(-1, this.parse(-1));
-                console.log(0, this.parse(0));
-                console.log(1, this.parse(1));
-                console.log(2, this.parse(2));
-                console.log(10, this.parse(10));
-                console.log(30, this.parse(30));
             }
 
             start() {
@@ -102,12 +92,17 @@
             }
 
             onOrientation(event) {
-                const { alpha, beta, gamma } = event;
-                this.cube.style.transform = `rotate3d(${this.parse(beta)}, ${this.parse(alpha)}, ${this.parse(gamma)}, 10deg)`;
+                const { absolute, alpha, beta, gamma } = event;
+
+                if (alpha === null) {
+                    this.cube.style.transform = `rotateX(${this.parse(beta)}deg) rotateY(0deg) rotateZ(${-this.parse(gamma)}deg)`;
+                } else {
+                    this.cube.style.transform = `rotateX(${this.parse(beta)}deg) rotateY(${-this.parse(gamma)}deg) rotateZ(${this.parse(alpha)}deg)`;
+                }
             }
 
             parse(value) {
-                return (Math.round((value || 0) / 30 * 100) / 100).toFixed(2);
+                return (value || 0) % 360;
             }
         }
 
