@@ -68,6 +68,7 @@
                 <section>
                     <section data-state="subtitles-end">
                         <h2>Sous-titres</h2>
+                        <!-- https://caniuse.com/#feat=webvtt | Well supported -->
                     </section>
                     <section data-state="subtitles-start" data-background-iframe="./subtitles/">
                         <span class="fragment"></span>
@@ -87,6 +88,7 @@ track.addCue(cue);</code></pre>
                     <section>
                         <h2>Battery manager</h2>
                         <div id="battery"></div>
+                        <!-- https://caniuse.com/#feat=battery-status | Chrome-->
                     </section>
                     <section>
                         <!-- https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager -->
@@ -100,6 +102,7 @@ navigator.getBattery().then(batteryManager => {
                 <section>
                     <section>
                         <h2>Game Pad</h2>
+                        <!-- https://caniuse.com/#feat=gamepad | Good (no IE 11) -->
                     </section>
                     <section data-background-iframe="./node_modules/gamepad.js/index.html"></section>
                     <section>
@@ -116,6 +119,7 @@ window.addEventListener('gamepadconnected', event => {
                 </section>
                 <section>
                     <h2>Visibilité de l'onglet</h2>
+                    <!-- https://caniuse.com/#feat=pagevisibility | Perfect -->
                     <pre><code class="hjs javascript">// You can listen for visibility change
 document.addEventListener('visibilitychange', event => {
     document.visibilityState;
@@ -127,6 +131,7 @@ document.addEventListener('visibilitychange', event => {
                 </section>
                 <section data-state="notify">
                     <h2>Notifications</h2>
+                    <!-- https://caniuse.com/#feat=notifications | Good (no IE11, no ios) -->
                     <pre><code class="hjs javascript">// You have to request permission first
 Notification.requestPermission().then(result => {
     if (result === 'granted') {
@@ -138,6 +143,7 @@ Notification.requestPermission().then(result => {
                 <section>
                     <section data-state="speech-synthesis-end">
                         <h2>Speech Synthesis</h2>
+                        <!-- https://caniuse.com/#feat=speech-synthesis | Good (no IE11) -->
                     </section>
                     <section data-state="speech-synthesis-start" data-background-iframe="./speech-synthesis">
                         <span class="fragment"></span>
@@ -158,6 +164,7 @@ window.speechSynthesis.speak(sentence);</code></pre>
                 <section>
                     <section data-state="user-media-end">
                         <h2>User media</h2>
+                        <!-- https://caniuse.com/#feat=stream | Pretty good (no IE11, no old safary) -->
                     </section>
                     <section data-state="user-media-start" data-background-iframe="./user-media"></section>
                     <section data-state="user-media-end">
@@ -171,14 +178,15 @@ navigator.mediaDevices
                 <section>
                     <section>
                         <h2>Number of processor core</h2>
+                        <!-- https://caniuse.com/#feat=hardwareconcurrency | Good (no IE11) -->
                         <script>document.write(`You hace ${navigator.hardwareConcurrency} core(s).`);</script>
-                        <!-- https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager -->
                         <pre><code class="hjs javascript center">const { hardwareConcurrency } = navigator;</code></pre>
                     </section>
                 </section>
                 <section>
                     <section data-state="drop-end">
                         <h2>Drop</h2>
+                        <!-- https://caniuse.com/#feat=dragndrop | Good (no mobile) -->
                     </section>
                     <section data-state="drop-start" data-background-iframe="./drop">
                         <span class="fragment"></span>
@@ -201,6 +209,7 @@ addEventListener('drop', event => {
                 <section>
                     <section data-state="geolocation-end">
                         <h2>Geolocation</h2>
+                        <!-- https://caniuse.com/#feat=geolocation | Perfect -->
                     </section>
                     <section data-state="geolocation-start" data-background-iframe="./geolocation">
                         <span class="fragment"></span>
@@ -218,6 +227,7 @@ this.geolocation.getCurrentPosition(position => position.coords);
                 <section>
                     <section data-state="device-orientation-end">
                         <h2>Device orientation</h2>
+                        <!-- https://caniuse.com/#search=orientation | Pretty good (no safary) -->
                     </section>
                     <section data-state="device-orientation-start" data-background-iframe="./device-orientation">
                         <span class="fragment"></span>
