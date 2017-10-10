@@ -129,8 +129,14 @@ document.addEventListener('visibilitychange', event => {
     // boolean
 })</code></pre>
                 </section>
-                <section data-state="notify">
-                    <h2>Notifications</h2>
+                <section>
+                    <section>
+                        <h2>Notifications</h2>
+                    </section>
+                    <section data-state="notify">
+                        <h3 class="emoji">🚨</h3>
+                    </section>
+                    <section>
                     <!-- https://caniuse.com/#feat=notifications | Good (no IE11, no ios) -->
                     <pre><code class="hjs javascript">// You have to request permission first
 Notification.requestPermission().then(result => {
@@ -139,6 +145,7 @@ Notification.requestPermission().then(result => {
         new Notification('Mulder, it\'s me.');
     }
 });</code></pre>
+                    </section>
                 </section>
                 <section>
                     <section data-state="speech-synthesis-end">
@@ -294,7 +301,7 @@ addEventListener('deviceorientation', event => {
                 console.log('setDemo', name, demo);
                 const next = () => {
                     let hasNext = demo.next();
-                    console.log(name, hasNext);
+
                     return hasNext ? Reveal.prevFragment() : Reveal.nextFragment();
                 };
 

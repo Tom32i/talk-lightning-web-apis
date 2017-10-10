@@ -33,6 +33,7 @@
 
                 this.video = video;
                 this.devices = devices;
+                this.stream = null;
                 this.constraints = {
                     video: true,
                     audio: false,
@@ -55,11 +56,13 @@
 
             stop() {
                 super.stop();
-                this.video.srcObject.stop();
                 this.video.pause();
+                Array.from(this.stream.getAudioTracks()).forEach(stream => stream.stop());
+                Array.from(this.stream.getVideoTracks()).forEach(stream => stream.stop());
             }
 
             onStream(stream) {
+                this.stream = stream;
                 this.video.srcObject = stream;
             }
 
